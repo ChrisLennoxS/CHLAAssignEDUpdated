@@ -24,16 +24,20 @@ const StyledButton = styled.button`
 `;
 
 const HamburgerDropDown = styled(HiMenu)`
-	color: '#713489';
+	color: #713489;
 	height: 14;
 `;
 
 const NavigationBar = styled.nav`
-	background-color: '#FFF';
-	width: 100vw;
+	background-color: #FFF;
+	width: 100%;
 	height: 5vh;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 2%;
+	position: sticky;
+	top: 0;
+	right:0;
+	left: 0;
 `;
