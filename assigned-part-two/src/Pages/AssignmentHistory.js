@@ -1,36 +1,171 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import DropDown from '../Components/DropDown/DropDown';
 import NavBar from '../Components/NavBar/NavBar';
 import InputTitle from '../Components/Text/InputTitle';
+import { Assignments } from '../json/Assignments';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import * as ReactBootStrap from 'react-bootstrap';
+import Calendar from '../Components/DropDown/DropDownCalendar';
 
 const AssignmentHistory = () => {
+	document.body.style.overflowX = 'hidden';
+
+	const [data, setData] = useState([]);
+	const [filteredData, setFilteredData] = useState([]);
+	const [loading, setLoading] = useState(false);
+
+	const [currentPage, setCurrentPage] = useState(1);
+	const [assignmentsPerPage, setAssignmentsPerPage] = useState(10);
+
+	const [pageNumberLimit, setPageNumberLimit] = useState(3);
+	const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
+	const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+
+	const [currentNurse, setCurrentNurse] = useState('Select');
+	const [currentZone, setCurrentZone] = useState('Orange Zone (13-15, 17)');
+	const [startDate, setStartDate] = useState('Select');
+	const [endDate, setEndDate] = useState('');
+
+	const pages = [];
+	// calculates the number of pages needed
+	for (let i = 1; i < Math.ceil(data.length / assignmentsPerPage); i++) {
+		pages.push(i);
+	}
+
+	const handleClick = (event) => {
+		setCurrentPage(Number(event.target.id));
+	};
+
+	const handleFirstClick = () => {
+		setCurrentPage(1);
+
+		if ((currentPage - 1) % pageNumberLimit === 0) {
+			setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+			setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
+		}
+	};
+
+	const handleLastClick = () => {
+		setCurrentPage(pages[pages.length - 1]);
+	};
+
+	const indexOfLastItem = currentPage * assignmentsPerPage;
+	const indexOfFirstItem = indexOfLastItem - assignmentsPerPage;
+	const currentListOfItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+	const columns = [
+		{ dataField: 'Nurse', text: 'Nurse' },
+		{ dataField: 'Zone', text: 'Zone' },
+		{ dataField: 'Date', text: 'Date' },
+		{ dataField: 'Start', text: 'Start' },
+		{ dataField: 'End', text: 'End' },
+	];
+
+	useEffect(() => {
+
+		const tempArray = [];
+		Assignments.forEach((info, key) => {
+			tempArray.push(info);
+		});
+		setData(tempArray);
+	}, []);
+
+	useEffect(() => {
+		//case 1: name and date only
+		//case 2: all fields
+
+		let tempArray = [];
+		if (currentNurse !== 'Select' && currentNurse !== '' && startDate !== "Select" && endDate!== "Select" && currentZone !== "Select") {
+			tempArray = Assignments.filter((obj) => {
+				let day = parseInt(obj.Date.split('/')[1])
+				let month = (parseInt(obj.Date.split('/')[0]))%12
+				let year = parseInt(obj.Date.split('/')[2])
+				let tempDate = new Date(year,month-1, day)
+				return obj.Nurse === currentNurse && obj.Zone === currentZone && (tempDate >= new Date(startDate)) && (tempDate <= new Date(endDate));
+			});
+		}
+		else if (currentNurse !== 'Select' && currentNurse !== '' && startDate !== "Select" && endDate!== "Select") {
+			tempArray = Assignments.filter((obj) => {
+				let day = parseInt(obj.Date.split('/')[1])
+				let month = (parseInt(obj.Date.split('/')[0]))%12
+				let year = parseInt(obj.Date.split('/')[2])
+				let tempDate = new Date(year,month-1, day)
+				return (obj.Nurse === currentNurse) && (tempDate >= new Date(startDate)) && (tempDate <= new Date(endDate));
+			});
+		}
+		setData(tempArray);
+	}, [startDate, currentZone, currentNurse]);
+
 	return (
 		<>
 			<NavBar></NavBar>
-			<div className='container'>
-				<div style={{display:'flex', justifyContent:'space-between', alignItems: 'center', marginBottom: '2%'}}>
+			<div
+				className='container'
+				style={{ overflowX: 'hidden', height: '92vh' }}>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						marginBottom: '2%',
+						overflowX: 'hidden',
+					}}>
 					<PageTitle>Assignment History</PageTitle>
-                    <Export onClick={() => {}}>Update</Export>
+					<Export onClick={() => {}}>Export</Export>
 				</div>
-				<div style={{display:'flex', justifyContent: 'space-between'}}>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+					}}>
 					<div>
 						<InputTitle title='Nurse'></InputTitle>
-                        <p>Meredith</p>
+						<DropDown
+							getText={(value) => {
+								setCurrentNurse(value);
+							}}
+							width={'220px'}
+							type='Nurses'
+						/>
 					</div>
 					<div>
 						<InputTitle title='Zone'></InputTitle>
-                        <p>Grey</p>
+						<DropDown
+							getText={(value) => {
+								setCurrentZone(value);
+							}}
+							width={'220px'}
+							type='Zones'
+						/>
 					</div>
 					<div>
 						<InputTitle title='Date'></InputTitle>
-                        <p>m.grey@chla.com</p>
+						<DropDown
+							width={'220px'}
+							type='Calendar'
+							setStartDate={(value) => setStartDate(value)}
+							setEndDate={(value) => setEndDate(value)}
+						/>
 					</div>
 				</div>
-				<div>
-					<div style={{display:'inline-block'}}>
-						
+				<div style={{ maxHeight: '584px' }}>
+					<div>
+						<BootstrapTable
+							keyField='id'
+							data={data}
+							columns={columns}
+							pagination={paginationFactory()}
+						/>
 					</div>
-                    
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+						}}>
+						<p style={{ paddingLeft: '10px' }}>Showing Items</p>
+					</div>
 				</div>
 			</div>
 		</>
@@ -55,9 +190,44 @@ const Export = styled.button`
 	border: none;
 	border-radius: 5px;
 	margin-top: 2%;
-    margin-left: 2%;
+	margin-left: 2%;
 	&:active {
 		background-color: rgba(113, 52, 137, 1);
 		color: rgba(255, 255, 255, 1);
+	}
+`;
+
+const ListOfIndices = styled.ul`
+	list-style: none;
+	display: flex;
+`;
+
+const Index = styled.li`
+	padding: 10px;
+	border: 1px solid white;
+	cursor: pointer;
+
+	:active {
+		background-color: '#FBF0FF';
+		color: '#713489';
+		border: '#713489';
+	}
+`;
+
+const OuterIndexButtons = styled.button`
+	background-color: transparent;
+	border: none;
+	color: #f0f2f3;
+	font-size: 14px;
+	cursor: pointer;
+	color: red;
+
+	:hover {
+		background-color: '#FBF0FF';
+		color: '#713489';
+	}
+
+	:focus {
+		outline: none;
 	}
 `;

@@ -11,7 +11,7 @@ const UpdatePassword = () => {
 
 	const content = (
 		<>
-			<ModalTitle title='Create Password'></ModalTitle>
+			<ModalTitle title='Update Password'></ModalTitle>
 			<InputTitle title='Current Password'></InputTitle>
 			<TextInput type='password'></TextInput>
 			<InputTitle title='New Password'></InputTitle>
