@@ -50,3 +50,5 @@ ___
 * react@17.0.2
 * styled-components@5.3.0
 * web-vitals@1.1.2
+
+[Quick Overview](https://docs.google.com/document/d/1S0xb_5mmAaDkIlCKVu4VGlQQvuz8Dh07UaTHbccL2rw/edit#heading=h.s93556vjax4z)
