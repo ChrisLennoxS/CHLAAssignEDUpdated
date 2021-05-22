@@ -7,21 +7,14 @@ import { Assignments } from '../json/Assignments';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import * as ReactBootStrap from 'react-bootstrap';
-import Calendar from '../Components/DropDown/DropDownCalendar';
+
 
 const AssignmentHistory = () => {
 	document.body.style.overflowX = 'hidden';
 
 	const [data, setData] = useState([]);
-	const [filteredData, setFilteredData] = useState([]);
-	const [loading, setLoading] = useState(false);
-
 	const [currentPage, setCurrentPage] = useState(1);
-	const [assignmentsPerPage, setAssignmentsPerPage] = useState(10);
-
-	const [pageNumberLimit, setPageNumberLimit] = useState(3);
-	const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(3);
-	const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
+	const assignmentsPerPage = 10;
 
 	const [currentNurse, setCurrentNurse] = useState('Select');
 	const [currentZone, setCurrentZone] = useState('Orange Zone (13-15, 17)');
@@ -34,26 +27,9 @@ const AssignmentHistory = () => {
 		pages.push(i);
 	}
 
-	const handleClick = (event) => {
-		setCurrentPage(Number(event.target.id));
-	};
-
-	const handleFirstClick = () => {
-		setCurrentPage(1);
-
-		if ((currentPage - 1) % pageNumberLimit === 0) {
-			setMaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
-			setMinPageNumberLimit(minPageNumberLimit - pageNumberLimit);
-		}
-	};
-
-	const handleLastClick = () => {
-		setCurrentPage(pages[pages.length - 1]);
-	};
 
 	const indexOfLastItem = currentPage * assignmentsPerPage;
 	const indexOfFirstItem = indexOfLastItem - assignmentsPerPage;
-	const currentListOfItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
 	const columns = [
 		{ dataField: 'Nurse', text: 'Nurse' },
@@ -197,37 +173,3 @@ const Export = styled.button`
 	}
 `;
 
-const ListOfIndices = styled.ul`
-	list-style: none;
-	display: flex;
-`;
-
-const Index = styled.li`
-	padding: 10px;
-	border: 1px solid white;
-	cursor: pointer;
-
-	:active {
-		background-color: '#FBF0FF';
-		color: '#713489';
-		border: '#713489';
-	}
-`;
-
-const OuterIndexButtons = styled.button`
-	background-color: transparent;
-	border: none;
-	color: #f0f2f3;
-	font-size: 14px;
-	cursor: pointer;
-	color: red;
-
-	:hover {
-		background-color: '#FBF0FF';
-		color: '#713489';
-	}
-
-	:focus {
-		outline: none;
-	}
-`;

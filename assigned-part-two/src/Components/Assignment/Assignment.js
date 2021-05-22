@@ -35,9 +35,6 @@ const Assignment = (props) => {
 
 		setStartTime(hours + ':' + minutes);
 		setEndTime(endHours + ':' + endMinutes);
-
-		console.log(((date.getHours() + 8)%24))
-		console.log(endTime)
 	};
 
 	useEffect(() => {
@@ -63,7 +60,6 @@ const Assignment = (props) => {
 	}, [colorNumber]);
 
 	useEffect(() => {
-		//console.log("last try " + nurseToAssign + shiftType + zone + startTime + endTime)
 		props.addToList(newAssignment, newID);
 	}, [nurseToAssign, shiftType, zone, startTime, endTime]);
 
@@ -75,8 +71,6 @@ const Assignment = (props) => {
 				nurse.split(' ')[0] + ' ' + nurse.split(' ')[1][0] + '.'
 			);
 		}
-
-		//console.log('this is the nure ' + nurse);
 	}, [nurse]);
 
 	useEffect(() => {

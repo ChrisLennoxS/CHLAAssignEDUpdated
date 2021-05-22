@@ -42,11 +42,7 @@ export default class Calendar extends React.Component {
 			this.setState({
 				to: day,
 				enteredTo: day,
-			});
-			console.log(this.state.from)
-			console.log(this.state.enteredTo)
-			const tempStart = this.state.from.toLocaleDateString().split("/")
-			const tempEnd = this.state.enteredTo.toLocaleDateString().split("/")
+			});			
 			this.props.setStartDate(this.state.from );
 			this.props.setEndDate(this.state.enteredTo);
 		}

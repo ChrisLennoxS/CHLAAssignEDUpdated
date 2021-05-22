@@ -63,7 +63,6 @@ const Map = () => {
 
 	// loads the current assignments based on the room that was clicked on or the create assignment modal
 	const loadAssignments = (zoneToLoad) => {
-		console.log(zoneToLoad);
 		if (zoneToLoad === 'empty') {
 			// When clicking the "Create Assignment button in the nav bar"
 			setAssignmentList(
@@ -97,9 +96,7 @@ const Map = () => {
 
 	// saves all of the new assignments created while the modal was open in that single instance
 	const saveNewAssignments = () => {
-		console.log('testing the save ' + tempAssignmentsToAdd.length);
 		tempAssignmentsToAdd.forEach((element) => {
-			console.log(element['Nurse']);
 			setZone(element);
 		});
 	};
@@ -560,10 +557,11 @@ const Map = () => {
 								gridRowEnd: 5,
 								marginLeft: '-25%',
 								width: '134px',
+								zIndex: '3'
 							}}>
 							<div
 								style={{
-									/*border: 'solid',*/ marginLeft: '-45%',
+									 marginLeft: '-45%',
 								}}>
 								<ZoneLabel>Red Zone (18-21)</ZoneLabel>
 								<Zone
