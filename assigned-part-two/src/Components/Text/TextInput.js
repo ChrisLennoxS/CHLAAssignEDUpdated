@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
+// styled text input
 const TextInput = (props) => {
     const type = props.type;
     

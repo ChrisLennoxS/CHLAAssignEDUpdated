@@ -27,10 +27,7 @@ const AssignmentHistory = () => {
 		pages.push(i);
 	}
 
-
-	const indexOfLastItem = currentPage * assignmentsPerPage;
-	const indexOfFirstItem = indexOfLastItem - assignmentsPerPage;
-
+	//table headers
 	const columns = [
 		{ dataField: 'Nurse', text: 'Nurse' },
 		{ dataField: 'Zone', text: 'Zone' },

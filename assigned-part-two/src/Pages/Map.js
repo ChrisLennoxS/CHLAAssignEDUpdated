@@ -7,15 +7,15 @@ import Zone from '../Zones/Zone';
 import Assignment from '../Components/Assignment/Assignment';
 
 const Map = () => {
-	const [assignmentList, setAssignmentList] = useState([]);
-	const [tempAssignmentsToAdd, setTempAssignmentsToAdd] = useState([]);
-	const [newAssignmentCount, setNewAssignmentCount] = useState(0);
-	const [zoneBeingAssignedString, setZoneBeingAssignedString] = useState();
-	const [zoneBeingAssigned, setZoneBeingAssigned] = useState();
-	const [modal, setModalBackground] = useState('hidden');
-	const [isVisible, setIsVisible] = useState(false);
-	const [clickCount, setClickCount] = useState(0);
-	const transition = useTransition(isVisible, {
+	const [assignmentList, setAssignmentList] = useState([]); // list that holds the assignment components when the assignment modal pops out
+	const [tempAssignmentsToAdd, setTempAssignmentsToAdd] = useState([]); // holds the objects representing assignments
+	const [newAssignmentCount, setNewAssignmentCount] = useState(0);// holds the temp id of each assignment being added
+	const [zoneBeingAssignedString, setZoneBeingAssignedString] = useState();// string of the zone name
+	const [zoneBeingAssigned, setZoneBeingAssigned] = useState();// temp variable to hold the last zone clicked on
+	const [modal, setModalBackground] = useState('hidden');// create assignment modal
+	const [isVisible, setIsVisible] = useState(false);// create assignment's visibility
+	const [clickCount, setClickCount] = useState(0);// counter to show the create assignment modal
+	const transition = useTransition(isVisible, {// transition for create assignment modal
 		from: { marginRight: -360 },
 		enter: { marginRight: 0 },
 		leave: { marginRight: -360 },
@@ -78,19 +78,19 @@ const Map = () => {
 					)
 				)
 			);
-		} else {// When clicking a physical screen
-			
-				setAssignmentList((assignmentList) => [
-					...assignmentList,
-					<Assignment
-						id={newAssignmentCount}
-						stringifyInfo={''}
-						zoneClicked={zoneBeingAssignedString}
-						addToList={(value, id) =>
-							(tempAssignmentsToAdd[id] = value)
-						}></Assignment>,
-				]);
-			
+		} else {
+			// When clicking a physical screen
+
+			setAssignmentList((assignmentList) => [
+				...assignmentList,
+				<Assignment
+					id={newAssignmentCount}
+					stringifyInfo={''}
+					zoneClicked={zoneBeingAssignedString}
+					addToList={(value, id) =>
+						(tempAssignmentsToAdd[id] = value)
+					}></Assignment>,
+			]);
 		}
 	};
 
@@ -103,7 +103,7 @@ const Map = () => {
 
 	// assigns a json object of the new assignment to the room
 	const setZone = (assignmentObject) => {
-		const tempJSON = JSON.stringify(assignmentObject)
+		const tempJSON = JSON.stringify(assignmentObject);
 		switch (assignmentObject['ZoneAssigned']) {
 			case 'Orange Zone (13-15, 17)':
 				setOrangeZone(new Set(orangeZone.add(tempJSON)));
@@ -179,7 +179,6 @@ const Map = () => {
 		}
 	};
 
-	
 	// hides the scrolling function when the create assignment modal is open
 	useEffect(() => {
 		if (clickCount > 0) {
@@ -190,14 +189,12 @@ const Map = () => {
 		}
 	}, [isVisible]);
 
-	// opens the assignment modal 
+	// opens the assignment modal
 	useEffect(() => {
 		if (isVisible) {
 			loadAssignments(zoneBeingAssigned);
 		}
 	}, [zoneBeingAssignedString]);
-
-
 
 	return (
 		<>
@@ -266,8 +263,6 @@ const Map = () => {
 								</div>
 								<AssignmentListDiv>
 									{assignmentList.map((data, key) => {
-										
-
 										return data;
 									})}
 									<div style={{ paddingLeft: '22px' }}>
@@ -418,7 +413,7 @@ const Map = () => {
 							<div
 								onClick={() => {
 									setZoneBeingAssigned(purpleZone);
-									
+
 									setZoneBeingAssignedString(
 										'Purple Zone (5b, 6a/b, 7)'
 									);
@@ -557,11 +552,11 @@ const Map = () => {
 								gridRowEnd: 5,
 								marginLeft: '-25%',
 								width: '134px',
-								zIndex: '3'
+								zIndex: '3',
 							}}>
 							<div
 								style={{
-									 marginLeft: '-45%',
+									marginLeft: '-45%',
 								}}>
 								<ZoneLabel>Red Zone (18-21)</ZoneLabel>
 								<Zone
@@ -720,7 +715,9 @@ const Map = () => {
 								<div>
 									<div
 										onClick={() => {
-											setZoneBeingAssigned(dischargeLounge);
+											setZoneBeingAssigned(
+												dischargeLounge
+											);
 											setZoneBeingAssignedString(
 												'Discharge Lounge'
 											);

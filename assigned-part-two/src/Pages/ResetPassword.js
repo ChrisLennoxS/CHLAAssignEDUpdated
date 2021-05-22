@@ -7,7 +7,7 @@ import TextInput from '../Components/Text/TextInput';
 import assignedLogo from '../Images/Logos/assigned.svg';
 
 const ResetPassword = () => {
-	const [emailSent, setEmailSent] = useState(false);
+	const [emailSent, setEmailSent] = useState(false);// used for transition of the modal size
 	const [modalHeight, setModalHeight] = useState('405px');
 	const modalWidth = '423px';
 

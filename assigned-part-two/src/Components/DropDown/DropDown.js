@@ -8,19 +8,17 @@ import ShiftDiv from '../Text/ShiftDiv';
 import Calendar from './DropDownCalendar';
 
 //Types: shifts, calendar, assignee
-// Width, height
-// return function prop
 
 const DropDown = (props) => {
 	const [selectedValue, setSelectedValue] = useState(
 		props.defaultDropDownText
 	);
-	const [dropDownDisplay, setDropDownDisplay] = useState('none');
-	const [list, setList] = useState('');
-	const [clickCount, setClickCount] = useState(0);
+	const [dropDownDisplay, setDropDownDisplay] = useState('none'); // display of the dropdown's list
+	const [list, setList] = useState(''); // list is determined by the prop
+	const [clickCount, setClickCount] = useState(0); // used in useeffect to show dropdown
 	const textColor =
-		selectedValue === 'Select' ? 'rgba(51, 51, 51, 0.5)' : '#000';
-	const topMargin = props.type === 'Shifts' && clickCount > 0 ? '8px' : '0px';
+		selectedValue === 'Select' ? 'rgba(51, 51, 51, 0.5)' : '#000'; // if a prop was already passed to the dropdown it will automatically appear black
+	const topMargin = props.type === 'Shifts' && clickCount > 0 ? '8px' : '0px'; // the list of shifts is a special case since it is holding he shiftdiv component and not text
 
 	const displayOptions = () => {
 		dropDownDisplay === 'none'
@@ -128,7 +126,6 @@ const DropDown = (props) => {
 							overflowY: 'hidden',
 							margin: '0px auto',
 							marginBottom: '2px',
-							
 						}}>
 						<Calendar
 							style={{ width: '140px' }}

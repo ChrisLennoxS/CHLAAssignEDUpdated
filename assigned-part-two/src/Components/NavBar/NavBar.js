@@ -16,6 +16,7 @@ const NavBar = (props) => {
 	const [showDropDown, setShowDropDown] = useState(false);
 	const [clickCount, setClickCount] = useState(0);
 
+	// open button
 	const open = (
 		<div
 			style={{
@@ -40,7 +41,8 @@ const NavBar = (props) => {
 				}}></HamburgerDropDown>
 		</div>
 	);
-
+	
+	// close button
 	const close = (
 		<img
 			style={{ marginLeft: '-26px', marginTop: '5px' }}
@@ -52,6 +54,7 @@ const NavBar = (props) => {
 		/>
 	);
 
+	// containter for the drop icon (holds the close and open button when they switch states)
 	const [dropIcon, setDropIcon] = useState(open);
 
 	useEffect(() => {

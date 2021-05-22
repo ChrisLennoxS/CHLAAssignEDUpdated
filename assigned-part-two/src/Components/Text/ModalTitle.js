@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
+// chunky block text of the modal
 const ModalTitle = (props) => {
     const header = props.title;
     return (

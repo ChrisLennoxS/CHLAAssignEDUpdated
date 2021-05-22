@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// acts a styled label
 const InputTitle = (props) => {
 	const header = props.title;
 	return (

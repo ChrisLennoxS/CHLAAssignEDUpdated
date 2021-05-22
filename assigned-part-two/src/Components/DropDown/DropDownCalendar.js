@@ -2,6 +2,7 @@ import React from 'react';
 import DayPicker, { DateUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
+// Calendar used in the dropdown on the assigment history page
 export default class Calendar extends React.Component {
 	constructor(props) {
 		super(props);

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// Modal that appears on most pages besides the map and the assignment history
 const Modal = (props) => {
 	return (
 		<Background >

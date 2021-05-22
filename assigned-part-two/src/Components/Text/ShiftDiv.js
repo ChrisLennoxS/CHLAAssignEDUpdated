@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// used to hold the map view names and also the shifts
 const ShiftDiv = (props) => {
 	return (
 		<ColoredBox
